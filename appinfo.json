@@ -1,0 +1,97 @@
+{
+  "uuid": "421c8875-1951-4ea6-94e4-19ca9250b13b",
+  "shortName": "Weather",
+  "longName": "Weather App",
+  "companyName": "LegitimateSounding.com",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": true
+  },
+  "appKeys": {
+    "temperature_f": 0,
+    "temperature_c": 1,
+    "icon":          2,
+    "error":         3,
+    "location":      4
+  },
+  "resources": {
+    "media": [
+      {
+        "name": "CLEAR_DAY",
+        "type": "png",
+        "file": "images/clear-day.png"
+      },
+      {
+        "name": "CLEAR_NIGHT",
+        "type": "png",
+        "file": "images/clear-night.png"
+      },
+      {
+        "name": "CLOUDY",
+        "type": "png",
+        "file": "images/cloudy.png"
+      },
+      {
+        "name": "ERROR",
+        "type": "png",
+        "file": "images/error.png"
+      },
+      {
+        "name": "FOG",
+        "type": "png",
+        "file": "images/fog.png"
+      },
+      {
+        "name": "PARTLY_CLOUDY_DAY",
+        "type": "png",
+        "file": "images/partly-cloudy-day.png"
+      },
+      {
+        "name": "PARTLY_CLOUDY_NIGHT",
+        "type": "png",
+        "file": "images/partly-cloudy-night.png"
+      },
+      {
+        "name": "RAIN",
+        "type": "png",
+        "file": "images/rain.png"
+      },
+      {
+        "name": "SLEET",
+        "type": "png",
+        "file": "images/sleet.png"
+      },
+      {
+        "name": "SNOW",
+        "type": "png",
+        "file": "images/snow.png"
+      },
+      {
+        "name": "WIND",
+        "type": "png",
+        "file": "images/wind.png"
+      },
+      {
+        "type": "font",
+        "name": "FONT_ROBOTO_CONDENSED_21",
+        "file": "fonts/Roboto-Condensed.ttf"
+      },
+      {
+        "characterRegex": "[0-9:]",
+        "type": "font",
+        "name": "FONT_ROBOTO_BOLD_SUBSET_49",
+        "file": "fonts/Roboto-Bold.ttf"
+      },
+      {
+        "characterRegex": "[0-9:]",
+        "type": "font",
+        "name": "FONT_ROBOTO_BOLD_SUBSET_39",
+        "file": "fonts/Roboto-Bold.ttf"
+      }
+    ]
+  },
+  "capabilities": [
+    "location"
+  ]
+}
