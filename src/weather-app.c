@@ -49,6 +49,7 @@ void in_received_handler(DictionaryIterator *received, void *context) {
     if (image != NULL) {
       gbitmap_destroy(image);
       layer_remove_from_parent(bitmap_layer_get_layer(image_layer));
+      bitmap_layer_destroy(image_layer);
     }
 
     Layer *window_layer = window_get_root_layer(window);
@@ -65,14 +66,15 @@ static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
 
   // create time layer - this is where time goes
-  text_time_layer = text_layer_create(GRect(7, 0, 144-7, 168-92));
+  text_time_layer = text_layer_create(GRect(8, 24, 144-7, 168-92));
   text_layer_set_text_color(text_time_layer, GColorWhite);
   text_layer_set_background_color(text_time_layer, GColorClear);
   text_layer_set_font(text_time_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_49)));
   layer_add_child(window_layer, text_layer_get_layer(text_time_layer));
 
   // create date layer - this is where the date goes
-  text_date_layer = text_layer_create(GRect(8, 60, 144-8, 168-68));
+  text_date_layer = text_layer_create(GRect(8, 0, 144-16, 24));
+  text_layer_set_text_alignment(text_date_layer, GTextAlignmentCenter);
   text_layer_set_text_color(text_date_layer, GColorWhite);
   text_layer_set_background_color(text_date_layer, GColorClear);
   text_layer_set_font(text_date_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
@@ -91,6 +93,7 @@ static void window_unload(Window *window) {
   // destroy the text layers - this is good
   text_layer_destroy(text_date_layer);
   text_layer_destroy(text_time_layer);
+  text_layer_destroy(text_temp_layer);
 
   // destroy the image layers
   gbitmap_destroy(image);

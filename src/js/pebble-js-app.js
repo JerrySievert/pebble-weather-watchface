@@ -1,4 +1,4 @@
-var forecastIOKey = "YOUR-KEY";
+var forecastIOKey = "YOUR_API_KEY";
 
 // make it easy to convert an icon to a number for the pebble side
 var icons = [
