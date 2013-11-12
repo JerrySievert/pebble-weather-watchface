@@ -4,6 +4,9 @@ static Window *window;
 TextLayer *text_date_layer;
 TextLayer *text_time_layer;
 TextLayer *text_temp_layer;
+GFont *font49;
+GFont *font39;
+GFont *font21;
 
 #define NUMBER_OF_IMAGES 11
 static GBitmap *image = NULL;
@@ -65,11 +68,15 @@ void in_received_handler(DictionaryIterator *received, void *context) {
 static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
 
+  font49 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_49));
+  font39 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_39));
+  font21 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21));
+
   // create time layer - this is where time goes
   text_time_layer = text_layer_create(GRect(8, 24, 144-7, 168-92));
   text_layer_set_text_color(text_time_layer, GColorWhite);
   text_layer_set_background_color(text_time_layer, GColorClear);
-  text_layer_set_font(text_time_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_49)));
+  text_layer_set_font(text_time_layer, font49);
   layer_add_child(window_layer, text_layer_get_layer(text_time_layer));
 
   // create date layer - this is where the date goes
@@ -77,16 +84,15 @@ static void window_load(Window *window) {
   text_layer_set_text_alignment(text_date_layer, GTextAlignmentCenter);
   text_layer_set_text_color(text_date_layer, GColorWhite);
   text_layer_set_background_color(text_date_layer, GColorClear);
-  text_layer_set_font(text_date_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_21)));
+  text_layer_set_font(text_date_layer, font21);
   layer_add_child(window_layer, text_layer_get_layer(text_date_layer));
 
   // create temperature layer - this is where the temperature goes
   text_temp_layer = text_layer_create(GRect(80, 108, 144-80, 168-108));
   text_layer_set_text_color(text_temp_layer, GColorWhite);
   text_layer_set_background_color(text_temp_layer, GColorClear);
-  text_layer_set_font(text_temp_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_39)));
+  text_layer_set_font(text_temp_layer, font39);
   layer_add_child(window_layer, text_layer_get_layer(text_temp_layer));
-
 }
 
 static void window_unload(Window *window) {
@@ -97,21 +103,17 @@ static void window_unload(Window *window) {
 
   // destroy the image layers
   gbitmap_destroy(image);
+  layer_remove_from_parent(bitmap_layer_get_layer(image_layer));
   bitmap_layer_destroy(image_layer);
 
-  // destroy the window
-  window_destroy(window);
+  // unload the fonts
+  fonts_unload_custom_font(font49);
+  fonts_unload_custom_font(font39);
+  fonts_unload_custom_font(font21);
 }
 
 static void app_message_init(void) {
-  // Reduce the sniff interval for more responsive messaging at the expense of
-  // increased energy consumption by the Bluetooth module
-  // The sniff interval will be restored by the system after the app has been
-  // unloaded
-  app_comm_set_sniff_interval(SNIFF_INTERVAL_REDUCED);
-  // Init buffers
   app_message_open(64, 16);
-  // Register message handlers
   app_message_register_inbox_received(in_received_handler);
 }
 
@@ -161,6 +163,9 @@ static void init(void) {
 
 static void deinit(void) {
   tick_timer_service_unsubscribe();
+  app_message_deregister_callbacks();
+
+  window_stack_remove(window, true);
 
   window_destroy(window);
 }
