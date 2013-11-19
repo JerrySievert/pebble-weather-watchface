@@ -48,7 +48,6 @@ void in_received_handler(DictionaryIterator *received, void *context) {
   if (icon) {
     // figure out which resource to use
     int8_t id = icon->value->int8;
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "icon length %d (%d)", icon->length, icon->value->int8);
     if (image != NULL) {
       gbitmap_destroy(image);
       layer_remove_from_parent(bitmap_layer_get_layer(image_layer));
@@ -172,8 +171,6 @@ static void deinit(void) {
 
 int main(void) {
   init();
-
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Done initializing, pushed window: %p", window);
 
   app_event_loop();
   deinit();
