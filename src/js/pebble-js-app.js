@@ -47,7 +47,6 @@ function getCurrentWeather (lon, lat) {
             send.temperature_c = Number(FtoC(response.currently.temperature)).toFixed(0);
           }
 
-          console.log(JSON.stringify(send));
           Pebble.sendAppMessage(send);
         } else {
           console.log("Error");
